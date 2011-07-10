@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+</script>
+<title>Invite friends to join snapquiz</title>
+</head>
+<body>
+	<div id="fb-root"></div>
+	<fb:serverfbml> 
+		<script id="fbml-script" type="text/fbml">
+			<fb:fbml>
+				<fb:request-form action="http://fblocal.com/facebook/app/invite-sent.php" 
+					method="POST" invite="true" type="Test app" 
+					content="This content will go in the email! <fb:req-choice url='http://apps.facebook.com/myapptset/' label='Accept' /> ">
+						<fb:multi-friend-selector showborder="false" actiontext="Invite your friends to try snapquiz" cols="4" rows="7"/>
+				</fb:request-form>
+			</fb:fbml>
+		</script> 
+	</fb:serverfbml>
+
+</body>
+<script>
+window.fbAsyncInit = function() {
+	FB.init( {
+		appId : '22593781256',
+		status : true,
+		cookie : true,
+		xfbml : true
+	});
+	FB.getLoginStatus(function(response) {
+		if (response.session) {
+			// logged in and connected user, someone you know
+		} else {
+			// no user session available, someone you dont know
+			FB.login(function(response) {
+				ns.updateMe(response.session.uid);
+			});
+		}
+	});
+};
+(function() {
+	var e = document.createElement('script');
+	e.async = true;
+	e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+	if($('#fb-root').length === 0) {
+		var fbroot = document.createElement('div');
+		fbroot.setAttribute('id', 'fb-root');
+		document.getElementsByTagName('body')[0].appendChild(fbroot);
+	}	
+	document.getElementById('fb-root').appendChild(e);
+}());
+</script>
+</html>
